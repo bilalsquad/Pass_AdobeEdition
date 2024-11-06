@@ -1,5 +1,5 @@
 
--- Ouvrir une boîte de dialogue pour choisir le dossier de destination
+-- Ouvrir uneg boîte de dialogue pour choisir le dossier de destination
 set saveFolder to choose folder with prompt "Sélectionnez le dossier de destination pour la capture d'écran :"
 set saveFolderPath to POSIX path of saveFolder
 
