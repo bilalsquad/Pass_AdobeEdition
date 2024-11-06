@@ -1,0 +1,47 @@
+
+-- Ouvrir une boîte de dialogue pour choisir le dossier de destination
+set saveFolder to choose folder with prompt "Sélectionnez le dossier de destination pour la capture d'écran :"
+set saveFolderPath to POSIX path of saveFolder
+
+-- Boîte de dialogue pour entrer le nombre de pages
+display dialog "Entrez le nombre de pages à capturer :" default answer ""
+set nombreDePages to text returned of result as integer
+
+-- Activer Adobe Digital Editions et ajuster sa fenêtre pour un gros plan
+repeat with i from 1 to nombreDePages
+	tell application "Adobe Digital Editions 4.5"
+		delay 0.2
+		activate
+		delay 0.2
+		-- Boucle pour capturer chaque page
+		tell application "QuickTime Player"
+			activate
+			start (new screen recording)
+			tell application "System Events"
+				delay 0.2
+				key code 49
+				delay 0.2
+				key code 49
+				delay 0.2
+				key code 36
+				delay 0.2
+				delay 1
+			end tell
+			-- Enregistrer l'image dans le dossier spécifié
+			tell application "Preview"
+				save front document in POSIX file (saveFolderPath & "capture_page_" & i & ".png")
+				quit
+			end tell
+		end tell
+		delay 0.2
+		activate
+		delay 0.2
+		tell application "System Events"
+			key code 124
+		end tell
+	end tell
+end repeat
+
+
+-- Message de fin
+display dialog "Toutes les pages ont été capturées."
